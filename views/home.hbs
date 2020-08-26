@@ -1,0 +1,48 @@
+<div class="col-lg-3"></div>
+<div class="col-lg-6">
+  <div class="card">
+    <div class="card-header">
+      <h4 class="mt-2">Add new item To-Do List.</h4>
+    </div>
+    <div class="card-body">
+      <label for="todoTxt">To-Do Name*</label>
+      <form action="/" method="POST">
+        <input type="text" name="todoTxt" class="form-control" id="todoTxt" autofocus required>     
+        <button type="submit" class="btn btn-primary pr-4 pl-4 mt-2">Save</button>   
+      </form>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col-lg-12">
+      <ul class="list-group">
+        {{#each data}}
+           <li class="list-group-item" value={{this.id}}>{{this.todo}}</li>
+        {{/each}}
+      </ul>
+      <script>
+        $(document).ready(function() {
+            const todoItems = document.querySelectorAll('li');
+            todoItems.forEach((item) => {
+              item.addEventListener('click', (e) => {
+                let id = e.target.value;
+                $.ajax({
+                  url: '/removeTodo',
+                  type: 'POST',
+                  data: {id:id},
+                  success: function(response, textStatus, jqXHR) {
+                    console.log(textStatus)
+                    location.reload(true);
+                  }
+                });
+              })
+            })
+        });
+      </script>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <p class="text-muted text-center mt-5"> <a href="https://github.com/melihtulek" class="text-muted"> By Melihşah TÜLEK </a> | nodeJS & ExpressJS</p>
+    </div>
+  </div>
+</div>
